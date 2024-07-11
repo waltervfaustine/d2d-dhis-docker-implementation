@@ -22,7 +22,7 @@ services:
       timeout: 10s
       retries: 5
     networks:
-      - dhis-network
+      - ${DHIS_PROJECT_NAME}-dhis-network
     ports:
       - "${POSTGRES_HOST_PORT}:5432" # Map PostgreSQL internal port 5432 to external port 5482 for access
 
@@ -43,7 +43,7 @@ services:
     depends_on:
       - ${DHIS_PROJECT_NAME}_db
     networks:
-      - dhis-network
+      - ${DHIS_PROJECT_NAME}-dhis-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:${DHIS_HOST_PORT}/api/system/info.json"]
       interval: 30s
@@ -56,7 +56,7 @@ volumes:
   ${DHIS_PROJECT_NAME}_dhis_home:
 
 networks:
-  dhis-network:
+  ${DHIS_PROJECT_NAME}-dhis-network:
     external: true
 
 # DOCUMENTATION:

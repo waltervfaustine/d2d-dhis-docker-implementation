@@ -10,10 +10,10 @@ export $(grep -v '^#' .env | xargs)
 
 
 # Initialize PostgreSQL
-bash init-postgres.sh
+./init-postgres.sh
 
 # Initialize Tomcat
-bash init-tomcat.sh
+./init-tomcat.sh
 
 
 # DOCUMENTATION:
@@ -23,14 +23,14 @@ bash init-tomcat.sh
 # Ensure docker-compose.yml exists
 touch docker-compose.yml
 
-# Check if the network exists
-# if ! docker network inspect ${DHIS_PROJECT_NAME}-dhis-network &>/dev/null; then
-#     # Create the network
-#     docker network create ${DHIS_PROJECT_NAME}-dhis-network
-#     echo "Created network: ${DHIS_PROJECT_NAME}-dhis-network"
-# else
-#     echo "Network ${DHIS_PROJECT_NAME}-dhis-network already exists."
-# fi
+Check if the network exists
+if ! docker network inspect ${DHIS_PROJECT_NAME}-dhis-network &>/dev/null; then
+    # Create the network
+    docker network create ${DHIS_PROJECT_NAME}-dhis-network
+    echo "Created network: ${DHIS_PROJECT_NAME}-dhis-network"
+else
+    echo "Network ${DHIS_PROJECT_NAME}-dhis-network already exists."
+fi
 
 # DOCUMENTATION:
 # 3. **Network Creation**:
@@ -68,7 +68,7 @@ docker-compose up --force-recreate --build -d
 #    - Use this command to apply changes and start services after modifying the configuration or code.
 
 # Provide status information after deployment
-bash status.sh
+./status.sh
 
 # DOCUMENTATION:
 # 7. **Status Check**:

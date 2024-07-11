@@ -69,14 +69,14 @@ docker network rm ${DHIS_PROJECT_NAME}-dhis-network
 # - 'docker network rm' removes the network identified by its name (${DHIS_PROJECT_NAME}-dhis-network).
 
 # Remove all networks not used by at least one container
-# docker network prune -f
+docker network prune -f
 
 # DOCUMENTATION:
 # Removes all Docker networks that are not used by at least one container.
 # - 'docker network prune -f' performs a forced prune to remove unused networks.
 
 # Clean up unused Docker images
-# docker image prune -f
+docker image prune -f
 
 # DOCUMENTATION:
 # Cleans up all unused Docker images.

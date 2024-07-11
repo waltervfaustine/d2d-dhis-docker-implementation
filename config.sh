@@ -3,7 +3,7 @@
 ## Step 1: Create the .env file
 # This script creates a `.env` file to store environment variables for Docker configurations and other scripts.
 
-bash shutdown.sh
+./shutdown.sh
 
 touch .env
 
@@ -642,7 +642,7 @@ if [ "$confirm_update" == "y" ]; then
     echo "$cleaned_env_var" >> $output_file
   done
   echo "$(tput bold)$(tput setaf 2)Update successful!$(tput sgr0)"
-  bash startup.sh
+  ./startup.sh
 else
   echo ""
   echo "$(tput bold)$(tput setaf 1)Update cancelled.$(tput sgr0)"
