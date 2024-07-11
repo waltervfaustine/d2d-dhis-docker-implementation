@@ -125,7 +125,6 @@ echo "9. $(tput bold)DHIS Version $(tput setaf 3)2.33$(tput sgr0)"
 echo "10. $(tput bold)DHIS Version $(tput setaf 3)2.32$(tput sgr0)"
 echo ""
 
-# read -p "Enter the number: " dhis_version_choice
 read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_version_choice
 
 # Map the user's choice to the actual DHIS2 version
@@ -153,7 +152,6 @@ case "$DHIS_VERSION" in
     echo "2. https://releases.dhis2.org/41/dhis2-stable-latest.war"
     echo "3. https://releases.dhis2.org/41/dhis2-stable-41.0.0.war"
     echo ""
-    # read -p "Enter the number: " dhis_war_choice
     read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.0.1.war";;
@@ -178,7 +176,7 @@ case "$DHIS_VERSION" in
     echo "11. https://releases.dhis2.org/40/dhis2-stable-40.0.1.war"
     echo "12. https://releases.dhis2.org/40/dhis2-stable-40.0.0.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/40/dhis2-stable-40.4.1.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/40/dhis2-stable-latest.war";;
@@ -213,7 +211,7 @@ case "$DHIS_VERSION" in
     echo "13. https://releases.dhis2.org/2.39/dhis2-stable-2.39.0.1.war"
     echo "14. https://releases.dhis2.org/2.39/dhis2-stable-2.39.0.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/2.39/dhis2-stable-latest.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/2.39/dhis2-stable-2.39.5.war";;
@@ -255,7 +253,7 @@ case "$DHIS_VERSION" in
     echo "18. https://releases.dhis2.org/2.38/dhis2-stable-2.38.1.war"
     echo "19. https://releases.dhis2.org/2.38/dhis2-stable-2.38.0.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/2.38/dhis2-stable-latest.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/2.38/dhis2-stable-2.38.7.war";;
@@ -303,7 +301,7 @@ case "$DHIS_VERSION" in
     echo "19. https://releases.dhis2.org/2.37/dhis2-stable-2.37.1.war"
     echo "20. https://releases.dhis2.org/2.37/dhis2-stable-2.37.0.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/2.37/dhis2-stable-2.37-eos.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/2.37/dhis2-stable-latest.war";;
@@ -355,7 +353,7 @@ case "$DHIS_VERSION" in
     echo "22. https://releases.dhis2.org/2.36/dhis2-stable-2.36.2.war"
     echo "23. https://releases.dhis2.org/2.36/dhis2-stable-2.36.1.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/2.36/dhis2-stable-2.36-eos.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/2.36/dhis2-stable-2.36.13.war";;
@@ -406,7 +404,7 @@ case "$DHIS_VERSION" in
     echo "18. https://releases.dhis2.org/2.35/dhis2-stable-2.35.1.war"
     echo "19. https://releases.dhis2.org/2.35/dhis2-stable-2.35.0.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/2.35/dhis2-stable-2.35-eos.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/2.35/dhis2-stable-latest.war";;
@@ -446,7 +444,7 @@ case "$DHIS_VERSION" in
     echo "11. https://releases.dhis2.org/2.34/dhis2-stable-2.34.1.war"
     echo "12. https://releases.dhis2.org/2.34/dhis2-stable-2.34.0.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/2.34/dhis2-stable-2.34-eos.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/2.34/dhis2-stable-latest.war";;
@@ -478,7 +476,7 @@ case "$DHIS_VERSION" in
     echo "10. https://releases.dhis2.org/2.33/dhis2-stable-2.33.1.war"
     echo "11. https://releases.dhis2.org/2.33/dhis2-stable-2.33.0.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/2.33/dhis2-stable-2.33-eos.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/2.33/dhis2-stable-2.33.9.war";;
@@ -507,7 +505,7 @@ case "$DHIS_VERSION" in
     echo "8. https://releases.dhis2.org/2.32/dhis2-stable-2.32.1.war"
     echo "9. https://releases.dhis2.org/2.32/dhis2-stable-2.32.0.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/2.32/dhis2-stable-2.32-eos.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/2.32/dhis2-stable-2.32.7.war";;
@@ -537,7 +535,7 @@ case "$DHIS_VERSION" in
     echo "11. https://releases.dhis2.org/2.31/dhis2-stable-2.31.1.war"
     echo "12. https://releases.dhis2.org/2.31/dhis2-stable-2.31.0.war"
     echo ""
-    read -p "Enter the number: " dhis_war_choice
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
       1) DHIS_WAR_URL="https://releases.dhis2.org/2.31/dhis2-stable-2.31-eos.war";;
       2) DHIS_WAR_URL="https://releases.dhis2.org/2.31/dhis2-stable-2.31.9.war";;
