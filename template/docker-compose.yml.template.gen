@@ -1,0 +1,95 @@
+version: "${DOCKER_COMPOSE_VERSION}"
+
+services:
+  # PostgreSQL database service
+  ${DHIS_PROJECT_NAME}_db:
+    container_name: db_postgres_${ORGANIZATION_NAME}_${DHIS_PROJECT_NAME}_v${POSTGRES_VERSION}
+    image: ${ORGANIZATION_NAME}/postgresdb-${DHIS_PROJECT_NAME}:postgres-v${POSTGRES_VERSION}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB} # Database name for DHIS2 application
+      POSTGRES_USER: ${POSTGRES_USER} # Database username
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # Database password
+    env_file:
+      - .env 
+    volumes:
+      - ${DHIS_PROJECT_NAME}_db_data:/var/lib/postgresql/data # Persist PostgreSQL data
+      - ./postgres/init-extensions.sh:/docker-entrypoint-initdb.d/init-extensions.sh # Initialization script for extensions
+      - ./postgres/postgresql.conf:/etc/postgresql/postgresql.conf # Custom PostgreSQL configuration
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ] # Health check command
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - ${DHIS_PROJECT_NAME}-dhis-network
+    ports:
+      - "${POSTGRES_HOST_PORT}:5432" # Map PostgreSQL internal port 5432 to external port 5482 for access
+
+  # DHIS2 application service
+  ${DHIS_PROJECT_NAME}_dhis:
+    container_name: app_web_${ORGANIZATION_NAME}_${DHIS_PROJECT_NAME}_dhis_v${DHIS_VERSION}
+    image: ${ORGANIZATION_NAME}/${DHIS_PROJECT_NAME}-tomcat-dhis:tomcat-dhis-${DHIS_VERSION}
+    environment:
+      DHIS2_HOME: ${DHIS_HOME} # DHIS2 home directory for configuration
+      TZ: ${TZ}
+      DB_HOST: ${DHIS_PROJECT_NAME}_db # PostgreSQL host
+    ports:
+      - "${DHIS_HOST_PORT}:8080" # Expose DHIS2 web interface on port 8183
+    volumes:
+      - ${DHIS_PROJECT_NAME}_dhis_home:${DHIS_HOME} # Mount DHIS2 home directory for configuration persistence
+    env_file:
+      - .env 
+    depends_on:
+      - ${DHIS_PROJECT_NAME}_db
+    networks:
+      - ${DHIS_PROJECT_NAME}-dhis-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${DHIS_HOST_PORT}/api/system/info.json"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  ${DHIS_PROJECT_NAME}_db_data:
+  ${DHIS_PROJECT_NAME}_dhis_home:
+
+networks:
+  ${DHIS_PROJECT_NAME}-dhis-network:
+    external: true
+
+# DOCUMENTATION:
+# 1. **PostgreSQL (`db`) Service**:
+#    - Provides PostgreSQL database for DHIS2 application.
+#    - Uses dynamically generated Docker image based on `ORGANIZATION_NAME`, `POSTGRESDB_IMAGE_NAME`, and `POSTGRES_VERSION` from `.env` file.
+#    - Defines environment variables for database name (`POSTGRES_DB`), username (`POSTGRES_USER`), and password (`POSTGRES_PASSWORD`).
+#    - Configures a health check (`healthcheck` section) to ensure PostgreSQL is ready (`pg_isready -U ${POSTGRES_USER}`).
+#    - Mounts volumes for `init-extensions.sh` and `postgresql.conf` to customize PostgreSQL initialization and configuration.
+#    - Restarts unless stopped (`restart: unless-stopped`), ensuring database availability.
+#    - Exposes PostgreSQL internally on its default port 5432 and externally on port 5482 for external access.
+#
+# 2. **DHIS2 (`dhis`) Service**:
+#    - Provides DHIS2 application using dynamically generated Docker image based on `ORGANIZATION_NAME`, `DHIS_TOMCAT_IMAGE_NAME`, and `DHIS_VERSION` from `.env` file.
+#    - Defines environment variables for DHIS2 configuration (`DHIS_HOME`, `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`).
+#    - Exposes DHIS2 web interface on port 8183 (`ports: ["8183:8080"]`).
+#    - Mounts a volume (`ccimp_home`) to persist DHIS2 configuration (`/${DHIS_HOME}`).
+#    - Restarts unless stopped (`restart: unless-stopped`), ensuring application availability.
+#
+# 3. **Volumes (`volumes` section)**:
+#    - Defines Docker volumes (`${DHIS_PROJECT_NAME}_db_data`, `${DHIS_PROJECT_NAME}_ccimp_home`) for persisting PostgreSQL and DHIS2 data.
+#    - Ensures data persistence across container restarts, facilitating maintenance and updates.
+#
+# 4. **Networks (`networks` section)**:
+#    - Uses a project-specific external network (`${DHIS_PROJECT_NAME}-dhis-network`) for communication between PostgreSQL and DHIS2 services.
+#    - Facilitates secure and isolated communication within the Docker environment.
+#
+# 5. **Port Mappings**:
+#    - PostgreSQL (`db`) service is exposed internally on its default port 5432 and externally on port 5482 for external access.
+#    - DHIS2 (`dhis`) service exposes the DHIS2 web interface on port 8183 to allow external access.
+#
+# 6. **Usage**:
+#    - Use this Docker Compose configuration to deploy DHIS2 and PostgreSQL services in a Docker environment.
+#    - Ensure environment variables (`POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, etc.) are properly configured.
+#    - Adjust configuration (image versions, resource limits) based on specific requirements and performance considerations.
+#    - Customize PostgreSQL initialization and configuration using `init-extensions.sh` and `postgresql.conf` as needed.

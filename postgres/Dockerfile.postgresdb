@@ -1,0 +1,75 @@
+# Use official PostgreSQL 13 image as base
+FROM postgres:13
+
+# Install locales, PostgreSQL with PostGIS, and configure timezone
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        locales \
+        postgresql-13-postgis-3 \
+        postgis \
+        postgresql-13-pgrouting \
+    && locale-gen en_US.UTF-8 \
+    && echo "Africa/Dar_es_Salaam" > /etc/timezone \
+    && dpkg-reconfigure --frontend noninteractive tzdata \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set locale and timezone environment variables
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+# Copy initialization script to create extensions (if needed)
+COPY ./postgres/init-extensions.sh /docker-entrypoint-initdb.d/init-extensions.sh
+
+# Customize PostgreSQL configuration if required
+# COPY postgresql.conf /etc/postgresql/postgresql.conf
+
+# Expose PostgreSQL port
+EXPOSE 5432
+
+# Start PostgreSQL server
+CMD ["postgres"]
+
+# DOCUMENTATION:
+# 1. **Base Image**:
+#    - This Dockerfile extends the official PostgreSQL 13 image, providing a reliable and well-maintained base for the PostgreSQL database server.
+#
+# 2. **Locale and Timezone Configuration**:
+#    - Installs the locales package to support various system locales.
+#    - Generates the `en_US.UTF-8` locale to ensure proper localization.
+#    - Configures the system timezone to `Africa/Dar_es_Salaam` to align with Dar es Salaam, Tanzania.
+#    - These configurations ensure consistent locale and timezone settings within the container.
+#
+# 3. **PostgreSQL Extensions**:
+#    - Installs additional packages for PostgreSQL:
+#      - `postgresql-13-postgis-3` and `postgis` for advanced geospatial capabilities.
+#      - `postgresql-13-pgrouting` for routing and network analysis.
+#
+# 4. **Environment Variables**:
+#    - Sets environment variables for locale settings:
+#      - `LANG` to `en_US.UTF-8`.
+#      - `LANGUAGE` to `en_US:en`.
+#      - `LC_ALL` to `en_US.UTF-8`.
+#    - These variables ensure that all processes in the container use the correct locale settings.
+#
+# 5. **Initialization Script**:
+#    - Copies the `init-extensions.sh` script to the Docker entrypoint initialization directory (`/docker-entrypoint-initdb.d/`).
+#    - This script runs during the initialization of the PostgreSQL database, creating necessary extensions.
+#
+# 6. **Optional Customization**:
+#    - Provides an option to customize PostgreSQL configuration by copying a custom `postgresql.conf` file.
+#    - Uncomment the relevant line to enable this feature based on specific requirements.
+#
+# 7. **Port Exposure**:
+#    - Exposes the default PostgreSQL port (5432) to allow external access to the database server.
+#
+# 8. **Service Startup**:
+#    - Uses the `CMD` directive to start the PostgreSQL server (`postgres`) by default when the container is run without additional command arguments.
+#
+# 9. **Security Note**:
+#    - It is recommended to handle sensitive information, such as database passwords and user credentials, using environment variables or secrets management tools to ensure security.
+#
+# 10. **Adjustments**:
+#    - Adjust these configurations based on the specific requirements and deployment environment of your application.
+#
+# This comprehensive documentation ensures clarity on the purpose and functionality of each section of the Dockerfile, improving maintainability and ease of use.

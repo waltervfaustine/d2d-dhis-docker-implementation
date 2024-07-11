@@ -1,0 +1,53 @@
+# ----------------------------------------------------------------------
+# Database Connection Configuration
+# ----------------------------------------------------------------------
+
+# JDBC driver class
+connection.driver_class = org.postgresql.Driver
+# The fully qualified name of the JDBC driver class for PostgreSQL.
+
+# Database connection URL
+connection.url = jdbc:postgresql://${DHIS_PROJECT_NAME}_db:${DB_PORT}/${DB_NAME}
+# The URL of the PostgreSQL database to which the application should connect.
+# Format: jdbc:postgresql://<hostname>:<port>/<database_name>
+
+# Database username
+connection.username = ${DB_USER}
+# The username to use for connecting to the PostgreSQL database.
+
+# Database password
+connection.password = ${DB_PASSWORD}
+# The password to use for connecting to the PostgreSQL database.
+# NOTE: It is recommended to secure sensitive information such as passwords 
+# using environment variables or a secrets management tool instead of hardcoding them.
+
+# ----------------------------------------------------------------------
+# Server Configuration
+# ----------------------------------------------------------------------
+
+# Enable secure settings if deployed on HTTPS, default 'off', can be 'on'
+# server.https = on
+# Uncomment and set to 'on' to enable secure settings when deploying the 
+# application over HTTPS. This helps in enhancing the security of the application.
+
+# Server base URL
+# server.base.url = https://server.com
+# The base URL of the server where the application is hosted. This should
+# include the protocol (http or https) and the domain name or IP address.
+# Example: https://server.com or http://localhost:8080
+
+# DOCUMENTATION:
+# 1. **Database Connection Configuration**: 
+#    - Provides configuration details for connecting to a PostgreSQL database.
+#    - Specifies the PostgreSQL JDBC driver class (`connection.driver_class`).
+#    - Defines the PostgreSQL database connection URL (`connection.url`), utilizing placeholders for hostname, port, and database name.
+# 2. **Database Credentials**: 
+#    - `connection.username`: Specifies the username used for PostgreSQL database authentication, sourced from environment variables.
+#    - `connection.password`: Specifies the password used for PostgreSQL database authentication, sourced from environment variables.
+#    - **Security Note**: It is recommended to manage sensitive information, such as database passwords, securely using environment variables or a secrets management tool.
+# 3. **Server Configuration**: 
+#    - Provides settings for the server on which the application is hosted.
+#    - `server.https`: Can be set to 'on' to enforce secure settings when deploying the application over HTTPS, thereby enhancing security.
+#    - `server.base.url`: Specifies the base URL of the server, including the protocol (http or https) and the domain name or IP address.
+# 4. **Adjustments**: 
+#    - Customize these configurations according to specific application requirements and deployment environments.

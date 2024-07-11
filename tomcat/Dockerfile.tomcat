@@ -1,0 +1,98 @@
+# Define build arguments
+ARG JDK_VERSION
+ARG TOMCAT_VERSION
+ARG DHIS_VERSION
+ARG DHIS_WAR_URL
+
+# Use Tomcat 9 with OpenJDK 17 as the base image for the building stage
+# FROM tomcat:9.0.65-jdk17 as builder
+FROM tomcat:${TOMCAT_VERSION} as builder
+
+# Set environment variables for timezone and Debian frontend
+ARG DEBIAN_FRONTEND=noninteractive
+ARG TZ
+ARG DHIS_WAR_URL
+ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND} \
+    TZ=${TZ} \
+    DHIS_WAR_URL=${DHIS_WAR_URL}
+
+# Install necessary packages
+RUN apt-get update && \
+    apt-get install -y curl gettext-base && \
+    rm -rf /var/lib/apt/lists/*
+
+# Debug statement to check the value of DHIS_WAR_URL
+RUN echo "DHIS_WAR_URL is set to: ${DHIS_WAR_URL}"
+
+# Download DHIS2 WAR file and deploy to Tomcat
+RUN curl -L ${DHIS_WAR_URL} -o /usr/local/tomcat/webapps/ROOT.war
+
+# Use the same base image for the final image
+FROM tomcat:${TOMCAT_VERSION}
+
+# Set environment variables
+ARG DHIS_WAR_URL
+ARG DHIS_HOME
+ARG CATALINA_HOME=/usr/local/tomcat
+ARG JDK_JAVA_OPTIONS
+ENV DHIS_HOME=${DHIS_HOME} \
+    CATALINA_HOME=${CATALINA_HOME} \
+    JDK_JAVA_OPTIONS=${JDK_JAVA_OPTIONS} \
+    DHIS2_HOME=${DHIS_HOME}
+
+# Copy server.xml and DHIS2 WAR file from the builder stage
+COPY --from=builder /usr/local/tomcat/conf/server.xml /usr/local/tomcat/conf/server.xml
+COPY --from=builder /usr/local/tomcat/webapps/ROOT.war /usr/local/tomcat/webapps/ROOT.war
+
+# Create DHIS2 home directory for configuration files
+RUN mkdir -p $DHIS_HOME
+
+# Copy DHIS2 configuration template
+COPY ./tomcat/dhis.conf.template /usr/local/tomcat/conf/dhis.conf.template
+
+# Install gettext-base for variable substitution
+RUN apt-get update && \
+    apt-get install -y gettext-base && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy entry point script and set execute permissions
+COPY ./tomcat/entry-point.sh /usr/local/bin/entry-point.sh
+RUN chmod +x /usr/local/bin/entry-point.sh
+
+# Expose Tomcat port
+EXPOSE 8080
+
+# Add health check to ensure DHIS2 is running properly
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD curl -f http://localhost:${DHIS_HOST_PORT}/api/system/info.json || exit 1
+
+# Set the entry point to start Tomcat using the entry-point.sh script
+ENTRYPOINT ["/usr/local/bin/entry-point.sh"]
+
+# DOCUMENTATION:
+# 1. **Base Image for Building Stage**: 
+#    - Uses Tomcat 9 with OpenJDK 17 as the base image for building DHIS2.
+# 2. **Timezone Configuration**: 
+#    - Configures the timezone data package settings to avoid interactive prompts during setup.
+# 3. **Software Installation**: 
+#    - Installs `curl` and `gettext-base` to download the DHIS2 WAR file and perform variable substitutions.
+# 4. **WAR File Download**: 
+#    - Downloads the DHIS2 WAR file using the provided URL.
+# 5. **Final Image Setup**: 
+#    - Uses the same base image (Tomcat 9 with OpenJDK 17) for the final image.
+# 6. **Environment Variables**: 
+#    - Sets environment variables for `DHIS_HOME`, `CATALINA_HOME`, `JDK_JAVA_OPTIONS`, and `DHIS2_HOME`.
+# 7. **File Copying**: 
+#    - Copies `server.xml` and the DHIS2 WAR file from the builder stage to the final image.
+# 8. **Directory Creation**: 
+#    - Creates the DHIS2 home directory (`$DHIS_HOME`) for configuration files.
+# 9. **Configuration Template**: 
+#    - Copies the `dhis.conf.template` file to the Tomcat configuration directory for DHIS2 configuration.
+# 10. **Script Setup**: 
+#    - Copies the entry point script (`entry-point.sh`) to the appropriate directory and sets execute permissions.
+# 11. **Health Check**: 
+#    - Implements a health check to verify DHIS2 availability using `curl`.
+# 12. **Application Startup**: 
+#    - Sets the entry point to start Tomcat and run the DHIS2 application when the container is launched.
+# 13. **Configuration Adjustments**: 
+#    - Provides guidance to adjust configurations and Java memory options based on specific DHIS2 deployment requirements.
