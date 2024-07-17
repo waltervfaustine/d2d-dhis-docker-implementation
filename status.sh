@@ -99,9 +99,9 @@ main() {
         echo "------------------------------------------------------------------"
 
         # Display container information with formatting
-        echo -e "${BOLD}CONTAINER NAME: ${YELLOW}${BOLD}'${container_name^^}'"
-        echo -e "${BOLD}CONTAINER PORT: ${YELLOW}${BOLD}'${container_port^^}'"
-        echo -e "${BOLD}POSTGRES HOST MACHINE PORT: ${YELLOW}${BOLD}'${POSTGRES_HOST_PORT^^}'"
+        echo -e "${BOLD}CONTAINER NAME: ${YELLOW}${BOLD}'${container_name^^}'${NC}"
+        echo -e "${BOLD}CONTAINER PORT: ${YELLOW}${BOLD}'${container_port^^}'${NC}"
+        echo -e "${BOLD}POSTGRES HOST MACHINE PORT: ${YELLOW}${BOLD}'${POSTGRES_HOST_PORT^^}'${NC}"
 
         echo ""
 

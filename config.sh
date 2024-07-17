@@ -7,6 +7,55 @@
 
 touch .env
 
+# Function to remove all special characters and spaces from the string
+remove_special_chars_and_spaces() {
+    local input_string="$1"
+    local cleaned_string
+
+    # Remove all special characters except letters and digits
+    cleaned_string=$(echo "$input_string" | tr -cd '[:alnum:]')
+
+    echo "$cleaned_string"
+}
+
+# Function to combine words without spaces
+combine_words() {
+    local input_string="$1"
+    local combined_string
+
+    # Remove all spaces between words
+    combined_string=$(echo "$input_string" | tr -d ' ')
+
+    echo "$combined_string"
+}
+
+# Function to convert the content to lowercase
+convert_to_lowercase() {
+    local input_string="$1"
+    local lowercase_string
+
+    # Convert to lowercase
+    lowercase_string=$(echo "$input_string" | tr '[:upper:]' '[:lower:]')
+
+    echo "$lowercase_string"
+}
+
+# Function to apply all transformations: remove special characters, combine words, and convert to lowercase
+transform_string() {
+    local input_string="$1"
+    local result_string
+
+    # Remove special characters and spaces
+    result_string=$(remove_special_chars_and_spaces "$input_string")
+    # Combine words
+    result_string=$(combine_words "$result_string")
+    # Convert to lowercase
+    result_string=$(convert_to_lowercase "$result_string")
+
+    echo "$result_string"
+}
+
+
 # Function to generate a random port number between 49152 and 65535
 generate_random_port() {
     shuf -i 49152-65535 -n 1
@@ -73,7 +122,6 @@ prompt_for_value() {
         if [ -z "$var_value" ]; then
             echo "$(tput bold)$(tput setaf 1)Error:$(tput sgr0) Value cannot be empty. Please provide a value."
         else
-            # Return the formatted variable assignment
             echo "$var_name=$var_value"
             break
         fi
@@ -574,6 +622,12 @@ new_env_values=()
 # Add DHIS_WAR_URL to new_env_values array
 new_env_values+=("$(get_selected_value "$(tput bold)DHIS_WAR_URL" "$(tput setaf 2)$DHIS_WAR_URL$(tput sgr0)")")
 
+new_env_values+=("$(prompt_for_value "$(tput bold)DOCKER_COMPOSE_VERSION" "$(tput setaf 2)3.1$(tput sgr0)")")
+new_env_values+=("$(prompt_for_value "$(tput bold)POSTGRES_VERSION" "$(tput setaf 2)13$(tput sgr0)")")
+new_env_values+=("$(prompt_for_value "$(tput bold)TZ" "$(tput setaf 2)Africa/Dar_es_Salaam$(tput sgr0)")")
+new_env_values+=("$(prompt_for_value "$(tput bold)DHIS_HOME" "$(tput setaf 2)/home/dhis/config$(tput sgr0)")")
+
+
 new_env_values+=("$(prompt_for_value "$(tput bold)ORGANIZATION_NAME" "$(tput setaf 2)icodebible$(tput sgr0)")")
 new_env_values+=("$(prompt_for_value "$(tput bold)DHIS_PROJECT_NAME" "$(tput setaf 2)cainam$(tput sgr0)")")
 
@@ -597,13 +651,13 @@ new_env_values+=("$(get_selected_value "$(tput bold)DB_PASSWORD" "$(tput setaf 2
 
 new_env_values+=("$(prompt_for_value "$(tput bold)DB_PORT" "$(tput setaf 2)5432$(tput sgr0)")")
 
-new_env_values+=("$(get_selected_value "$(tput bold)DOCKER_COMPOSE_VERSION" "$(tput setaf 2)${DOCKER_COMPOSE_VERSION}$(tput sgr0)")")
-new_env_values+=("$(get_selected_value "$(tput bold)CPUS" "$(tput setaf 2)${CPUS}$(tput sgr0)")")
-new_env_values+=("$(get_selected_value "$(tput bold)MEMORY" "$(tput setaf 2)${MEMORY}$(tput sgr0)")")
-new_env_values+=("$(get_selected_value "$(tput bold)TZ" "$(tput setaf 2)${TZ}$(tput sgr0)")")
-new_env_values+=("$(get_selected_value "$(tput bold)DHIS_HOME" "$(tput setaf 2)${DHIS_HOME}$(tput sgr0)")")
-new_env_values+=("$(get_selected_value "$(tput bold)JDK_JAVA_OPTIONS" "$(tput setaf 2)${JDK_JAVA_OPTIONS}$(tput sgr0)")")
-new_env_values+=("$(get_selected_value "$(tput bold)POSTGRES_VERSION" "$(tput setaf 2)${POSTGRES_VERSION}$(tput sgr0)")")
+# new_env_values+=("$(get_selected_value "$(tput bold)DOCKER_COMPOSE_VERSION" "$(tput setaf 2)${DOCKER_COMPOSE_VERSION}$(tput sgr0)")")
+# new_env_values+=("$(get_selected_value "$(tput bold)CPUS" "$(tput setaf 2)${CPUS}$(tput sgr0)")")
+# new_env_values+=("$(get_selected_value "$(tput bold)MEMORY" "$(tput setaf 2)${MEMORY}$(tput sgr0)")")
+# new_env_values+=("$(get_selected_value "$(tput bold)TZ" "$(tput setaf 2)${TZ}$(tput sgr0)")")
+# new_env_values+=("$(get_selected_value "$(tput bold)DHIS_HOME" "$(tput setaf 2)${DHIS_HOME}$(tput sgr0)")")
+# new_env_values+=("$(get_selected_value "$(tput bold)JDK_JAVA_OPTIONS" "$(tput setaf 2)${JDK_JAVA_OPTIONS}$(tput sgr0)")")
+# new_env_values+=("$(get_selected_value "$(tput bold)POSTGRES_VERSION" "$(tput setaf 2)${POSTGRES_VERSION}$(tput sgr0)")")
 new_env_values+=("$(get_selected_value "$(tput bold)DHIS_VERSION" "$(tput setaf 2)${DHIS_VERSION}$(tput sgr0)")")
 
 new_env_values+=("$(get_selected_value "$(tput bold)POSTGRES_HOST_PORT" "$(tput setaf 2)$(find_random_free_port) $(tput sgr0)")")
