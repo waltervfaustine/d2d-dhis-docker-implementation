@@ -1,0 +1,20 @@
+#!/bin/bash
+# Post-installation script
+
+# Ensure d2d is executable
+chmod +x /usr/local/bin/d2d
+
+# Enable command completion for d2d
+BASH_COMPLETION_DIR=/etc/bash_completion.d
+
+# Check if bash completion directory exists
+if [ -d "$BASH_COMPLETION_DIR" ]; then
+    # Copy d2d-completion.sh to bash completion directory
+    cp ../d2d-completion.sh "$BASH_COMPLETION_DIR/d2d-completion.sh"
+    chmod 644 "$BASH_COMPLETION_DIR/d2d-completion.sh"
+
+    # Source bash completion script if not already sourced
+    if ! grep -q "source $BASH_COMPLETION_DIR/d2d-completion.sh" /etc/bash.bashrc; then
+        echo "source $BASH_COMPLETION_DIR/d2d-completion.sh" >> /etc/bash.bashrc
+    fi
+fi

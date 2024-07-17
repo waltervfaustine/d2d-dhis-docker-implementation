@@ -1,0 +1,9 @@
+Package: d2d
+Version: 1.0
+Section: base
+Priority: optional
+Architecture: all
+Depends: bash
+Maintainer: Walter V. Faustine <waltervfaustine@gmail.com>
+Description: DHIS2 Docker Installer Tool
+ A command-line tool to manage DHIS2 installation using Docker.

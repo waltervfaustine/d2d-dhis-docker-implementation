@@ -1,0 +1,22 @@
+#!/bin/bash
+# Pre-removal script
+
+# Remove the d2d script
+if [ -f /usr/local/bin/d2d ]; then
+  rm /usr/local/bin/d2d
+fi
+
+# Remove the command completion script
+if [ -f /etc/bash_completion.d/d2d-completion.sh ]; then
+  rm /etc/bash_completion.d/d2d-completion.sh
+fi
+
+# Optionally remove the /usr/local/bin directory if empty
+if [ -d /usr/local/bin ]; then
+  rmdir --ignore-fail-on-non-empty /usr/local/bin
+fi
+
+# Optionally remove the /etc/bash_completion.d directory if empty
+if [ -d /etc/bash_completion.d ]; then
+  rmdir --ignore-fail-on-non-empty /etc/bash_completion.d
+fi
