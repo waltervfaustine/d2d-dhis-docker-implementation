@@ -1,0 +1,16 @@
+Package: d2d
+Architecture: all
+Version: 1.0
+Priority: optional
+Section: base
+Maintainer: Walter V. Faustine <waltervfaustine@gmail.com>
+Depends: bash
+Filename: ../../pool/d2d-1.0.deb
+Size: 112324
+MD5sum: 2a2cd9ca16187b437a1580e3ea3c9d25
+SHA1: b27a4f2fc3a0f449f2dc655c98fe51ef6f38283f
+SHA256: 078c7130b3fb6ee789a05d8733161c55e4c6e6c5c4f2ecf253d61e0f053596b9
+SHA512: aa3fc16aa909d79389bba1a73abb923305958c07a2f2e51bae4fe61ecd652561178471a8778973ed554d40b0bb244b98564cbdfd1c2b8608a350703b2b41fd94
+Description: DHIS2 Docker Installer Tool
+ A command-line tool to manage DHIS2 installation using Docker.
+
