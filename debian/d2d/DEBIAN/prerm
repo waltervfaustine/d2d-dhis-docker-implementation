@@ -1,0 +1,51 @@
+#!/bin/bash
+# Pre-removal script for d2d CLI
+
+# Remove the d2d script from /usr/local/bin if it exists
+if [ -f /usr/local/bin/d2d ]; then
+  rm /usr/local/bin/d2d
+fi
+
+# Remove the d2d command completion script from /etc/bash_completion.d if it exists
+if [ -f /etc/bash_completion.d/d2d-completion.sh ]; then
+  rm /etc/bash_completion.d/d2d-completion.sh
+fi
+
+# Optionally remove the /usr/local/bin directory if it is empty after removing d2d
+if [ -d /usr/local/bin ]; then
+  rmdir --ignore-fail-on-non-empty /usr/local/bin
+fi
+
+# Optionally remove the /etc/bash_completion.d directory if it is empty after removing d2d-completion.sh
+if [ -d /etc/bash_completion.d ]; then
+  rmdir --ignore-fail-on-non-empty /etc/bash_completion.d
+fi
+
+# DOCUMENTATION:
+# 1. **Script Purpose**:
+#    - This script is designed to be run before removing the d2d CLI tool. It ensures cleanup of the installed components, including the main executable script and the command completion script.
+#
+# 2. **Steps Performed by the Script**:
+#    - Checks and removes the `d2d` executable script from `/usr/local/bin` if it exists.
+#    - Removes the `d2d-completion.sh` script from `/etc/bash_completion.d` if it exists.
+#    - Optionally removes the `/usr/local/bin` directory if it is empty after removing `d2d`.
+#    - Optionally removes the `/etc/bash_completion.d` directory if it is empty after removing `d2d-completion.sh`.
+#
+# 3. **Usage Instructions**:
+#    - Place this script in a suitable location within your uninstallation process for d2d CLI.
+#    - Ensure that `d2d` and `d2d-completion.sh` are present in their respective directories before running this script.
+#    - Run this script as a part of the d2d CLI uninstallation process.
+#
+# 4. **Example Usage**:
+#    - To run this script after uninstalling the d2d CLI, execute: `sudo ./pre_removal.sh`
+#
+# 5. **Error Handling**:
+#    - The script handles basic checks for file existence and directory removal with the `--ignore-fail-on-non-empty` option to avoid errors when directories are not empty.
+#    - Ensure that appropriate permissions are set for executing this script and modifying system directories.
+#
+# 6. **Important Notes**:
+#    - This script should be run with root privileges to modify files in `/usr/local/bin` and `/etc/bash_completion.d`.
+#    - Verify the paths and permissions according to your system configuration and security policies.
+#
+# 7. **Expected Output**:
+#    - The d2d CLI components, including the main executable and command completion script, are removed from the system.

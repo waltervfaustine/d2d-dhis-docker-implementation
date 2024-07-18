@@ -1,9 +1,26 @@
-Package: d2d
-Version: 1.0
+Source: d2d
 Section: base
 Priority: optional
-Architecture: all
-Depends: bash
 Maintainer: Walter V. Faustine <waltervfaustine@gmail.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 4.6.0
+Homepage: https://github.com/waltervfaustine/d2d-dhis-docker-implementation
+Vcs-Git: https://github.com/waltervfaustine/d2d-dhis-docker-implementation.git
 Description: DHIS2 Docker Installer Tool
  A command-line tool to manage DHIS2 installation using Docker.
+  .
+  This tool simplifies the process of setting up and managing DHIS2 instances
+  using Docker containers. It automates the installation and configuration
+  steps, making it easier to deploy and maintain DHIS2 environments.
+
+Package: d2d
+Architecture: all
+Depends: bash
+Description: DHIS2 Docker Installer Tool
+ A command-line tool to manage DHIS2 installation using Docker.
+  .
+  This tool simplifies the process of setting up and managing DHIS2 instances
+  using Docker containers. It automates the installation and configuration
+  steps, making it easier to deploy and maintain DHIS2 environments.
+
+

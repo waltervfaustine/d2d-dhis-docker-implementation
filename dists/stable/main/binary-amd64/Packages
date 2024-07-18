@@ -1,0 +1,40 @@
+Package: d2d
+Architecture: all
+Version: 1.0
+Maintainer: Walter V. Faustine <waltervfaustine@gmail.com>
+Depends: bash
+Filename: ../../../../pool/d2d-1.0.deb
+Size: 430656
+MD5sum: a340266986e9130419116cc8faa984b0
+SHA1: fb07a94ee450f1ac1af5b7f7095aa7189d040afb
+SHA256: e043740e85e8084e09c8ce1aa574ffb69cdb518aeee9c8af0c3c9df392a14030
+SHA512: c316cb47f2432cff6853a29ed435119dbe94b18ce01a5cd89681857d3cad56915148b1a246c6b09b90e436e1175e69f91a00f86497f49c16ab98936d3e35c86d
+Description: DHIS2 Docker Installer Tool
+ A command-line tool to manage DHIS2 installation using Docker.
+  .
+  This tool simplifies the process of setting up and managing DHIS2 instances
+  using Docker containers. It automates the installation and configuration
+  steps, making it easier to deploy and maintain DHIS2 environments.
+
+Package: d2d
+Architecture: all
+Version: 1.0
+Priority: optional
+Section: base
+Maintainer: Walter V. Faustine <waltervfaustine@gmail.com>
+Installed-Size: 13
+Depends: bash
+Filename: ../../../../pool/main/d2d_1.0_all.deb
+Size: 2656
+MD5sum: ee82cd02239ff06f4da6caacb5c3e037
+SHA1: 1de9105d04a29a4263a982740f9e6210c685a330
+SHA256: 46547f8e01e4b8b499275d142c98814ff3bb9934a7f8adebbb5f1dd75a48be2f
+SHA512: a14c86d225bd0e434ce3b643dc053cf52c81f68d6587c22f77c248ddae57dba22ae392e094efe8c18e4cece598f7392caf6f06bc5a2221cadd2c8c971d35445e
+Homepage: https://github.com/waltervfaustine/d2d-dhis-docker-implementation
+Description: DHIS2 Docker Installer Tool
+ A command-line tool to manage DHIS2 installation using Docker.
+  .
+  This tool simplifies the process of setting up and managing DHIS2 instances
+  using Docker containers. It automates the installation and configuration
+  steps, making it easier to deploy and maintain DHIS2 environments.
+

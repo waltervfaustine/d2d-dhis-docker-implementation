@@ -1,0 +1,53 @@
+#!/bin/bash
+# Post-installation script for d2d CLI
+
+# Ensure the d2d script is executable
+chmod +x /usr/local/bin/d2d
+
+# Define the bash completion directory
+BASH_COMPLETION_DIR=/etc/bash_completion.d
+
+# Check if the bash completion directory exists
+if [ -d "$BASH_COMPLETION_DIR" ]; then
+    # Copy the d2d completion script to the bash completion directory
+    cp ../d2d-completion.sh "$BASH_COMPLETION_DIR/d2d-completion.sh"
+    
+    # Set appropriate permissions for the completion script
+    chmod 644 "$BASH_COMPLETION_DIR/d2d-completion.sh"
+
+    # Source the bash completion script if it is not already sourced in /etc/bash.bashrc
+    if ! grep -q "source $BASH_COMPLETION_DIR/d2d-completion.sh" /etc/bash.bashrc; then
+        echo "source $BASH_COMPLETION_DIR/d2d-completion.sh" >> /etc/bash.bashrc
+    fi
+fi
+
+# DOCUMENTATION:
+# 1. **Script Purpose**:
+#    - This script is designed to be run after installing the d2d CLI tool. It ensures that the d2d command is executable and sets up command completion for an enhanced user experience.
+#
+# 2. **Steps Performed by the Script**:
+#    - Sets the d2d script as executable by changing its permissions to allow execution.
+#    - Defines the directory where bash completion scripts are stored (`/etc/bash_completion.d`).
+#    - Checks if the bash completion directory exists. If it does:
+#      - Copies the d2d completion script (`d2d-completion.sh`) from the parent directory to the bash completion directory.
+#      - Sets the permissions of the copied completion script to read-only for all users.
+#      - Ensures that the bash completion script is sourced in `/etc/bash.bashrc` to enable command completion for all users.
+#
+# 3. **Usage Instructions**:
+#    - Place this script in a suitable location within your installation process.
+#    - Ensure that `d2d-completion.sh` is available in the parent directory of this script before running it.
+#    - Run this script as a part of the d2d CLI installation process.
+#
+# 4. **Example Usage**:
+#    - To run this script after installing the d2d CLI, execute: `sudo ./post_install.sh`
+#
+# 5. **Error Handling**:
+#    - The script does not include explicit error handling. Ensure that all directories and files exist and have the appropriate permissions before running the script.
+#
+# 6. **Important Notes**:
+#    - This script should be run with root privileges to modify files in `/usr/local/bin` and `/etc/bash_completion.d`.
+#    - Verify the paths and permissions according to your system configuration and security policies.
+#
+# 7. **Expected Output**:
+#    - The d2d command becomes executable.
+#    - Command completion for d2d is enabled, allowing users to use tab completion for d2d commands in the terminal.
