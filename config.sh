@@ -161,50 +161,76 @@ fi
 echo ""
 echo "$(tput bold)Please select a DHIS2 version by entering the corresponding number:$(tput sgr0)"
 echo ""
-echo "1. $(tput bold)DHIS Version $(tput setaf 3)41$(tput sgr0)"
-echo "2. $(tput bold)DHIS Version $(tput setaf 3)40$(tput sgr0)"
-echo "3. $(tput bold)DHIS Version $(tput setaf 3)2.39$(tput sgr0)"
-echo "4. $(tput bold)DHIS Version $(tput setaf 3)2.38$(tput sgr0)"
-echo "5. $(tput bold)DHIS Version $(tput setaf 3)2.37$(tput sgr0)"
-echo "6. $(tput bold)DHIS Version $(tput setaf 3)2.36$(tput sgr0)"
-echo "7. $(tput bold)DHIS Version $(tput setaf 3)2.35$(tput sgr0)"
-echo "8. $(tput bold)DHIS Version $(tput setaf 3)2.34$(tput sgr0)"
-echo "9. $(tput bold)DHIS Version $(tput setaf 3)2.33$(tput sgr0)"
-echo "10. $(tput bold)DHIS Version $(tput setaf 3)2.32$(tput sgr0)"
+echo "1. $(tput bold)DHIS Version $(tput setaf 3)42$(tput sgr0)"
+echo "2. $(tput bold)DHIS Version $(tput setaf 3)41$(tput sgr0)"
+echo "3. $(tput bold)DHIS Version $(tput setaf 3)40$(tput sgr0)"
+echo "4. $(tput bold)DHIS Version $(tput setaf 3)2.39$(tput sgr0)"
+echo "5. $(tput bold)DHIS Version $(tput setaf 3)2.38$(tput sgr0)"
+echo "6. $(tput bold)DHIS Version $(tput setaf 3)2.37$(tput sgr0)"
+echo "7. $(tput bold)DHIS Version $(tput setaf 3)2.36$(tput sgr0)"
+echo "8. $(tput bold)DHIS Version $(tput setaf 3)2.35$(tput sgr0)"
+echo "9. $(tput bold)DHIS Version $(tput setaf 3)2.34$(tput sgr0)"
+echo "10. $(tput bold)DHIS Version $(tput setaf 3)2.33$(tput sgr0)"
+echo "11. $(tput bold)DHIS Version $(tput setaf 3)2.32$(tput sgr0)"
 echo ""
 
 read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_version_choice
 
 # Map the user's choice to the actual DHIS2 version
 case "$dhis_version_choice" in
-  1) DHIS_VERSION="41";;
-  2) DHIS_VERSION="40";;
-  3) DHIS_VERSION="2.39";;
-  4) DHIS_VERSION="2.38";;
-  5) DHIS_VERSION="2.37";;
-  6) DHIS_VERSION="2.36";;
-  7) DHIS_VERSION="2.35";;
-  8) DHIS_VERSION="2.34";;
-  9) DHIS_VERSION="2.33";;
-  10) DHIS_VERSION="2.32";;
+  1) DHIS_VERSION="42";;
+  2) DHIS_VERSION="41";;
+  3) DHIS_VERSION="40";;
+  4) DHIS_VERSION="2.39";;
+  5) DHIS_VERSION="2.38";;
+  6) DHIS_VERSION="2.37";;
+  7) DHIS_VERSION="2.36";;
+  8) DHIS_VERSION="2.35";;
+  9) DHIS_VERSION="2.34";;
+  10) DHIS_VERSION="2.33";;
+  11) DHIS_VERSION="2.32";;
   *) echo "$(tput bold)$(tput setaf 1)Error:$(tput sgr0) Invalid choice! Exiting..."; exit 1;;
 esac
 
 # Depending on the chosen DHIS2 version, present the user with a list of WAR file URLs
 case "$DHIS_VERSION" in
+  "42")
+    echo ""
+    echo "$(tput bold)Please select the specific WAR file URL by entering the corresponding number:$(tput sgr0)"
+    echo ""
+    echo "1. https://releases.dhis2.org/42/dhis2-stable-latest.war"
+    echo "2. https://releases.dhis2.org/42/dhis2-stable-latest.war"
+    echo ""
+    read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
+    case "$dhis_war_choice" in
+      1) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-latest.war";;
+      2) DHIS_WAR_URL="https://releases.dhis2.org/42/dhis2-stable-42.0.0.war";;
+      *) echo "$(tput bold)$(tput setaf 1)Error:$(tput sgr0) Invalid choice! Exiting..."; exit 1;;
+    esac
+    ;;
   "41")
     echo ""
     echo "$(tput bold)Please select the specific WAR file URL by entering the corresponding number:$(tput sgr0)"
     echo ""
-    echo "1. https://releases.dhis2.org/41/dhis2-stable-41.0.1.war"
-    echo "2. https://releases.dhis2.org/41/dhis2-stable-latest.war"
-    echo "3. https://releases.dhis2.org/41/dhis2-stable-41.0.0.war"
+    echo "1. https://releases.dhis2.org/41/dhis2-stable-latest.war"
+    echo "2. https://releases.dhis2.org/41/dhis2-stable-41.4.0.war"
+    echo "3. https://releases.dhis2.org/41/dhis2-stable-41.3.1.war"
+    echo "4. https://releases.dhis2.org/41/dhis2-stable-41.3.0.war"
+    echo "5. https://releases.dhis2.org/41/dhis2-stable-41.2.0.war"
+    echo "6. https://releases.dhis2.org/41/dhis2-stable-41.1.0.war"
+    echo "7. https://releases.dhis2.org/41/dhis2-stable-41.0.1.war"
+    echo "8. https://releases.dhis2.org/41/dhis2-stable-41.0.0.war"
     echo ""
     read -p "$(tput bold)Please enter the number corresponding to your choice: $(tput sgr0)" dhis_war_choice
     case "$dhis_war_choice" in
-      1) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.0.1.war";;
-      2) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-latest.war";;
-      3) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.0.0.war";;
+      1) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-latest.war";;
+      2) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.4.0.war";;
+      3) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.3.1.war";;
+      4) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.3.0.war";;
+      5) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.2.0.war";;
+      6) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.1.0.war";;
+      7) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.0.1.war";;
+      8) DHIS_WAR_URL="https://releases.dhis2.org/41/dhis2-stable-41.0.0.war";;
       *) echo "$(tput bold)$(tput setaf 1)Error:$(tput sgr0) Invalid choice! Exiting..."; exit 1;;
     esac
     ;;
